@@ -1,0 +1,100 @@
+<!DOCTYPE HTML><html><head><meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title> Quiz </title>
+<style>
+.fbyes {color:green;}
+.fbno {color:red;}
+.ans {color:grey;}
+.unans {color:orange;}
+</style>
+<script>
+function inject(loc, val){document.getElementById(loc).innerHTML = val;}
+function join(list, item){list.push(item); item.ndx = list.length -1;}
+
+function progress(){ // list of buttons to go toQuestion(i)
+  var res = '';
+  for(var i = 0; i< theQuiz.questions.length; i++){
+    var q = theQuiz.questions[i];
+    var qstat = (q.lastClicked != -1) ? 'unans' : 'ans';
+    var num = (i == theQuiz.qndx)? '&gt;'+i+'&lt;' : i;
+    res += '&nbsp;&nbsp; <span class="'+qstat+'" onclick="toQ('+i+');">'+num+'</span>'
+  }
+  return res + '<br>' + theQuiz.get();
+}
+
+function toQ(i){theQuiz.qndx = i; theQuiz.repaint();}
+
+var theQuiz = new Quiz();
+function Quiz(){this.questions = []; this.qndx = 0; this.showFeedback = true; this.trys = 300;}
+Quiz.prototype.addQuestion = function(quest){join(this.questions, quest);}
+Quiz.prototype.prev = function(){this.qndx--; if(this.qndx < 0){this.qndx = this.questions.length - 1;} this.repaint();}
+Quiz.prototype.next = function(){this.qndx++; if(this.qndx == this.questions.length){this.qndx = 0;}; this.repaint();}
+Quiz.prototype.repaint = function(){
+  inject('question', this.questions[this.qndx].htm());
+  inject('progress', progress());
+}
+Quiz.prototype.get = function(){
+  var res = '', sep = '';
+  for(var i = 0; i<this.questions.length; i++){
+    var q = theQuiz.questions[i];
+    res += sep+'Q'+i+'='+q.lastClicked; sep = ','    
+  }
+  return res;
+}
+
+function Question(question){
+  this.q = question; this.answers = []; this.ndx = -1; theQuiz.addQuestion(this); 
+  this.lastClicked = -1; this.trys = theQuiz.trys;
+}
+Question.prototype.addAnswer = function(ans){join(this.answers, ans); ans.dad = this;}
+Question.prototype.htm = function(){
+  var res = '<h3>'+(this.ndx+1)+':</h3>' + this.q;
+  res += ((this.trys < 10) ? this.trysLeft() : '') + '<ul>';
+  for(var i = 0; i<this.answers.length; i++){res += this.answers[i].htm();}
+  return res + '</ul>'
+}
+Question.prototype.unclick = function(aid){if(this.trys > 0){this.lastClicked = -1;}}
+Question.prototype.clicked = function(aid){if(this.trys > 0){this.lastClicked = aid; this.trys--;}}
+Question.prototype.trysLeft = function(){return ' ('+this.trys + ' attempt' +((this.trys == 1) ? '':'s') + ' left)';}
+
+function a_clk(qid, aid){
+  var q = theQuiz.questions[qid];
+  var fb = q.answers[aid].feedback;
+  if(q.lastClicked == aid){q.unclick(aid);}else{q.clicked(aid);}
+  theQuiz.repaint();
+}
+
+function Answer(ans, feedback){this.ans = ans; this.feedback = feedback; this.ndx = -1; this.dad = -1;}
+Answer.prototype.htm = function(){
+  return '<li>' + this.aButton() + '&nbsp;&nbsp;' + this.fbHtm() + '</li>';}
+Answer.prototype.fbHtm = function(){
+  var fc = (this.ndx == 0) ? 'fbyes' : 'fbno';  // 0 is ndx of correct answer
+  var fb = (theQuiz.showFeedback) ? '<span class="' +fc+ '">' +this.feedback+ '</span>' : 'selected'; 
+  return (this.ndx == this.dad.lastClicked) ? fb : '';
+}  
+Answer.prototype.aButton = function(){
+  return '<span onclick="a_clk('+ this.dad.ndx +','+ this.ndx+');">'+this.ans+'</span>';
+}  
+
+window.onload = function(){
+  var q = new Question('When did Columbus discover America?');
+  q.addAnswer(new Answer('1492', 'correct'));
+  q.addAnswer(new Answer('1932', 'as if!'));
+  
+  q = new Question('Why does the porriage bird lay its egg in the air?');
+  q.addAnswer(new Answer('Because it can', 'indeed'));
+  q.addAnswer(new Answer('Because it must', 'nope'));
+  q.addAnswer(new Answer('To get to the other side', 'no'));
+  
+  theQuiz.repaint();
+}
+</script>
+</head><body>
+<div id="progress">progress</div>
+<div id="question">the question</div>
+
+<div id="buttons">
+  <button type="button" onclick="theQuiz.prev();">prev</button>
+  <button type="button" onclick="theQuiz.next();">next</button>
+</div>
+
+</body></html>
