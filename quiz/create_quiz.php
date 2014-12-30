@@ -41,6 +41,7 @@ function showQuestion(number){
 }
 
 function editQuestion(number){
+	$("#main").html("Please Change the Information Below");
 	var quizElement= quiz[number];
 	$('#multiForm, #tfForm').trigger("reset");
 	if (quizElement.category == 'mc'){
@@ -50,7 +51,7 @@ function editQuestion(number){
 		}
 		$("#multiAns").val(quizAnswers[number]);
 		$("#multiple_choice").show();
-	} else {
+	} else if (quizElement.category == 'tf') {
 		$("#tfQuest").val(quizElement.question);
 		$("#tfAns").val(quizAnswers[number]);
 		$("#true_false_questions").show();
