@@ -11,7 +11,7 @@ var questCount = 1;
 var trueFalse = '<form id="tfForm"> Question Text <textarea rows="4" cols="25" name="tfQuest" id="tfQuest"></textarea><br/>Answer: <select id="tfAns"><option value="True">True</option><option value="False">False</option></select></br><input type="submit" value="Add"></form>';
 */
 function injectQuizNum(count){
-	$("#quest_tree").append('<option selected="selected">'+count+'</option>');
+	$("#quest_tree").append('<option onclick="showQuestion('+ count +')" selected="selected">'+count+'</option>');
 }
 
 $(document).ready(function(){
@@ -53,7 +53,7 @@ $(document).ready(function(){
 		quizAnswers[questionNumber] = correct;
 		console.log(quiz[1]);
 		console.log(quizAnswers);
-		
+
 	})
 
 	$("#tfForm").submit(function(event){
