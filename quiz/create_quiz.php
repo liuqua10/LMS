@@ -153,6 +153,15 @@ $(document).ready(function(){
 	})
 
 	$("#add_choices").click(function(){
+		var multi = parseInt($("#multiCount").val());
+		update_multi = multi + 1;
+		$("#multiForm ul").append('<li><p>Answer ' + alphabet[multi] +': <input type="text" name="multi'+ update_multi+'" id="multi'+update_multi+'"></p></li>');
+		$('#multiCount').val(update_multi);
+	})
+
+	$("#add_match").click(function(){
+		$("#matchForm ul").append('<li><p><input type="text" name ="match" > : <input type="text" name="matchAns"</p></li>');
+		
 	})
 
 });
@@ -200,10 +209,13 @@ $(document).ready(function(){
 <div id="match">
 	<form id="matchForm">
 		<p>Question : Answer</p>
-		<p><input type="text" name="match1" id="match1"> : <input type="text" name="matchAns1" id="matchAns1"></p>
-		<p><input type="text" name="match2" id="match2"> : <input type="text" name="matchAns2" id="matchAns2"></p>
-		<p><input type="text" name="match3" id="match3"> : <input type="text" name="matchAns3" id="matchAns3"></p>
-		<p><input type="text" name="match4" id="match4"> : <input type="text" name="matchAns4" id="matchAns4"></p>
+		<ul id="matchAnswers">
+			<li><p><input type="text" name="match1" id="match1"> : <input type="text" name="matchAns1" id="matchAns1"></p></li>
+			<li><p><input type="text" name="match2" id="match2"> : <input type="text" name="matchAns2" id="matchAns2"></p></li>
+			<li><p><input type="text" name="match3" id="match3"> : <input type="text" name="matchAns3" id="matchAns3"></p></li>
+			<li><p><input type="text" name="match4" id="match4"> : <input type="text" name="matchAns4" id="matchAns4"></p></li>
+		</ul>
+		<button type="button" id="add_match">Add another match</button><input type="submit" value="Save"></form>
 		<p><input type="submit" value="Save"></p>
 	</form>
 </div>
