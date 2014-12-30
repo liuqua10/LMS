@@ -46,7 +46,7 @@ $(document).ready(function(){
 				answers.push($("#multi"+i).val());
 			}
 		}
-		var last = {question: quest, answer: answers};
+		var last = {type: 'mc', question: quest, answer: answers};
 		quiz.push(last);
 		var questionNumber = "q"+ $("quest_tree").val();
 		var correct = $("#multiAns").val();
@@ -60,7 +60,7 @@ $(document).ready(function(){
 		var quest = $('#tfQuest').val();
 		var answerTF = $('#tfAns').val();
 		var questionNumber = "q"+ $("quest_tree").val();
-		var last = {question:quest, answer: ['true', 'false']};
+		var last = {type: 'tf', question:quest, answer: ['true', 'false']};
 		quiz.push(last);
 		quizAnswers[questionNumber] = answerTF;
 		console.log(quiz[1]);
