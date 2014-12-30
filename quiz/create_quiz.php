@@ -53,6 +53,7 @@ $(document).ready(function(){
 		quizAnswers[questionNumber] = correct;
 		console.log(quiz[1]);
 		console.log(quizAnswers);
+		
 	})
 
 	$("#tfForm").submit(function(event){
