@@ -52,11 +52,12 @@ function editQuestion(number){
 	var quizElement= quiz[number];
 	$('#multiForm, #tfForm, #matchForm').trigger("reset");
 	if (quizElement.category == 'mc'){
+		clearMc();
 		$("#multiText").val(quizElement.question);
 		if (quizElement.answer.length > 4){
-			for (var j = 5; j < quizElement.answer.length; j++){
-				$("multiAnswers").append('')
-			}
+			for (var j = 5; j <= quizElement.answer.length; j++){
+				$("#multiAnswers").append('<li><p>Answer '+alphabet[j-1]+': <input type="text" name="multi'+j+'" id="multi'+j+'"></p></li>')
+			}	
 		}
 		for (var i = 0; i <= quizElement.answer.length; i++){
 			$("#multi"+(i+1)).val(quizElement.answer[i]);
@@ -68,6 +69,12 @@ function editQuestion(number){
 		$("#tfAns").val(quizAnswers[number]);
 		$("#true_false_questions").show();
 	} else {
+		clearMa();
+		if (quizElement.answer.length > 4){
+			for (var j = 5; j <= quizElement.answer.length; j++){
+				$("#matchAnswers").append('<li><p><input type="text" name="match'+j+'" id="match'+j+'"> : <input type="text" name="matchAns'+j+'" id="matchAns'+j+'"</p></li>')
+			}	
+		}
 		for (var i = 0; i < quizElement.question.length; i++){
 			var iCount = i+1
 			$("#match" + (i+1)).val(quizElement.question[i]);
@@ -75,6 +82,24 @@ function editQuestion(number){
 		}
 		$("#match").show();
 	}
+}
+
+function clearMc(){
+	var countDown = parseInt($("#multiCount").val());
+	while (countDown > 4){
+		$("#multiAnswers li:last").remove();
+		countDown--;
+	}
+	$("#multiCount").val('4');
+}
+
+function clearMa(){
+	var countDown = parseInt($("#matchCount").val());
+	while(countDown > 4){
+		$("#matchAnswers li:last").remove();
+		countDown--;
+	}
+	$('#matchCount').val('4');
 }
 
 $(document).ready(function(){
@@ -92,12 +117,7 @@ $(document).ready(function(){
 
 	$("#multi_choice").click(function(){
 		$('#multiForm').trigger("reset");
-		var countDown = parseInt($("#multiCount").val());
-		alert(countDown);
-		while (countDown > 4){
-			$("#multiAnswers li:last").remove();
-			countDown--;
-		}
+		clearMc();
 		$("#main").html("Please Enter Question Information");
 		$("#multiple_choice").show();
 		$("#true_false_questions, #match").hide();
@@ -112,6 +132,7 @@ $(document).ready(function(){
 
 	$("#matching").click(function(){
 		$('#matching').trigger("reset");
+		clearMa();
 		$("#main").html("Please Enter Question Information");
 		$("#match").show();
 		$("#multiple_choice, #true_false_questions").hide();
@@ -145,8 +166,19 @@ $(document).ready(function(){
 
 	$("#matchForm").submit(function(event){
 		event.preventDefault();
-		var quest = [$("#match1").val(), $("#match2").val(), $("#match3").val(), $("#match4").val()];
-		var answers = [$("#matchAns1").val(), $("#matchAns2").val(), $("#matchAns3").val(), $("#matchAns4").val(),]
+		var count = $("#matchCount").val();
+		var quest = [];
+		for (var i = 1; i <= count; i++) {
+			if ($("#match"+i).val() != ""){
+				quest.push($("#match"+i).val());
+			}
+		}
+		var answers = []
+		for (var i = 1; i <= count; i++) {
+			if ($("#matchAns"+i).val() != ""){
+				answers.push($("#matchAns"+i).val());
+			}
+		}
 		var questionNumber = $("#quest_tree").val();
 		var last = {category: 'ma', question:quest, answer: answers};
 		quiz[questionNumber]= last;
@@ -161,14 +193,16 @@ $(document).ready(function(){
 
 	$("#add_choices").click(function(){
 		var multi = parseInt($("#multiCount").val());
-		update_multi = multi + 1;
-		$("#multiForm ul").append('<li><p>Answer ' + alphabet[multi] +': <input type="text" name="multi'+ update_multi+'" id="multi'+update_multi+'"></p></li>');
-		$('#multiCount').val(update_multi);
+		multi++;
+		$("#multiForm ul").append('<li><p>Answer ' + alphabet[multi-1] +': <input type="text" name="multi'+ multi+'" id="multi'+multi+'"></p></li>');
+		$('#multiCount').val(multi);
 	})
 
 	$("#add_match").click(function(){
-		$("#matchForm ul").append('<li><p><input type="text" name ="match" > : <input type="text" name="matchAns"</p></li>');
-		
+		var matc = parseInt($("#matchCount").val());
+		matc++;
+		$("#matchForm ul").append('<li><p><input type="text" name ="match'+matc+'" id="match'+matc+'" > : <input type="text" name="matchAns'+matc+'" id="matchAns'+matc+'"></p></li>');
+		$('#matchCount').val(matc);
 	})
 
 });
@@ -222,7 +256,8 @@ $(document).ready(function(){
 			<li><p><input type="text" name="match3" id="match3"> : <input type="text" name="matchAns3" id="matchAns3"></p></li>
 			<li><p><input type="text" name="match4" id="match4"> : <input type="text" name="matchAns4" id="matchAns4"></p></li>
 		</ul>
-		<button type="button" id="add_match">Add another match</button><input type="submit" value="Save"></form>
+		<input name="multiCount" id="matchCount" type="hidden" value="4">
+		<button type="button" id="add_match">Add another match</button>
 		<p><input type="submit" value="Save"></p>
 	</form>
 </div>
