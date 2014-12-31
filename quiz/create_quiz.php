@@ -131,7 +131,7 @@ $(document).ready(function(){
 	});
 
 	$("#matching").click(function(){
-		$('#matching').trigger("reset");
+		$('#matchForm').trigger("reset");
 		clearMa();
 		$("#main").html("Please Enter Question Information");
 		$("#match").show();
