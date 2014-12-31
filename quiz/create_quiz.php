@@ -6,11 +6,7 @@ var quizAnswers = [];
 //counter for sotring question count
 var questCount = 1;
 var alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-//multiple choice html
-/*var qMulti = '<form id="multiForm"> Question Text <textarea rows="4" cols="25" name="multiA" id="multiText"></textarea> <br/> Answer: <input type="text" name="multiB" id="multiA"> <br/> Answer: <input type="text" name="multiB" id="multiB"> <br/> Answer: <input type="text" name="multiC" id="multiC"> <br/> Answer: <input type="text" name="multiD" id="multiD"> <br/> Correction Answer: <input type="text" id="multiAns"><br/><input type="submit" value="Add"></form>';
-//true/false html
-var trueFalse = '<form id="tfForm"> Question Text <textarea rows="4" cols="25" name="tfQuest" id="tfQuest"></textarea><br/>Answer: <select id="tfAns"><option value="True">True</option><option value="False">False</option></select></br><input type="submit" value="Add"></form>';
-*/
+
 function injectQuizNum(){
 	$("#quest_tree").append('<option onclick="showQuestion('+ questCount+')" selected="selected">'+questCount+'</option>');
 	quiz[questCount]= '';
@@ -57,6 +53,11 @@ function editQuestion(number){
 	$('#multiForm, #tfForm, #matchForm').trigger("reset");
 	if (quizElement.category == 'mc'){
 		$("#multiText").val(quizElement.question);
+		if (quizElement.answer.length > 4){
+			for (var j = 5; j < quizElement.answer.length; j++){
+				$("multiAnswers").append('')
+			}
+		}
 		for (var i = 0; i <= quizElement.answer.length; i++){
 			$("#multi"+(i+1)).val(quizElement.answer[i]);
 		}
@@ -91,6 +92,12 @@ $(document).ready(function(){
 
 	$("#multi_choice").click(function(){
 		$('#multiForm').trigger("reset");
+		var countDown = parseInt($("#multiCount").val());
+		alert(countDown);
+		while (countDown > 4){
+			$("#multiAnswers li:last").remove();
+			countDown--;
+		}
 		$("#main").html("Please Enter Question Information");
 		$("#multiple_choice").show();
 		$("#true_false_questions, #match").hide();
