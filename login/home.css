@@ -4,6 +4,32 @@
 	clear: both;
 }
 
+.forget, .signup, .back {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 11px;
+}
+
+.stay {
+	font-size: 12px;
+}
+
+.forget {
+	text-align: left;
+}
+
+.signup, .back {
+	text-align: right;
+	
+}
+
+
+body { 
+	background-color: #f6fbfc;
+	font-family: Helvetica, Verdana, sans-serif; 
+	margin:0px;
+}
+
 
 .loginform {
 	display: block;
@@ -34,6 +60,11 @@ border-radius: 5px;
 	text-align: center;
 }
 
+.loginbtn {
+	text-align: right;
+	padding-right: 20px;
+	width: 80%;
+}
 
 .info{
 	display: inline;
