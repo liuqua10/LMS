@@ -1,0 +1,47 @@
+.enter {
+	display: inline;
+	padding-right: 20px;
+	clear: both;
+}
+
+
+.loginform {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height:331px;
+	width:600px;
+	padding:20px;
+	border:none;
+}
+
+.textbox {
+	padding: 10px;
+	text-align: center;
+	clear: both;
+}
+
+
+.btn {
+padding:5px 15px; 
+background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+
+.signupbtn {
+	text-align: center;
+}
+
+
+.info{
+	display: inline;
+	margin-right: 80px;
+}
+
+.back {
+	display: inline;
+	float: right: 
+}
+
