@@ -10,6 +10,8 @@ var questCount = 1;
 var alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 // default choice number
 var DEFAULT_NUM = 4;
+// empty variable to store the quiz name after creation for sending to the php script.
+var qName = '';
 
 
 
@@ -22,14 +24,22 @@ $(document).ready(function(){
 		var title = {qName: $("#quizName").val()};
 		quiz.push(title);
 		quizAnswers.push(title);
+		qName = $("#quizName").val();
 		$("#main").html("Please Select a Question Type");
 		injectQuizNum(questCount, quiz, quizAnswers);
 		// unhide question type navigation and question tracking tree
 		$("#question_nav").show();
 		$("#quest_track").show();
-	
 	});
 
+///////////////////////Save the quiz to the database
+	$("#save_quiz").click(function(){
+		var quizData = JSON.stringify(quiz);
+		var quizAns = JSON.stringify(quizAnswers);
+		$.post('store_quiz.php', {quizName: qName, questions: quizData, answers: quizAns}, function(data){
+			console.log(data);
+		});
+	})
 
 
 /////////////////////////// Could reduce redundency by creating new functions and unifiying the id names for questions/////////////////////// 
@@ -324,3 +334,4 @@ function clear(question_type) {
 		</span>
 	</form>
 </div>
+<button type="button" id="save_quiz">Save Quiz</button>
