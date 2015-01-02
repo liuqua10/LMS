@@ -1,7 +1,6 @@
 <?php
-
 require('../connect.php');
-	$quiz_select = '<form id="quiz_select">Please select a quiz. <select name="quiz_name" id="quiz_name">';
+	$quiz_select = '';
 	$query = "SELECT * FROM task WHERE type = 'q';";
 	$prep = $db->prepare($query);
 	$prep->execute();
@@ -9,21 +8,24 @@ require('../connect.php');
 	foreach($results as $result){
 		$quiz_select .= '<option value="'. $result['task_id'] .'">'. $result['name'] .'</option>';
 	}
-	$quiz_select .= '</select><br/><input type="submit" value="Submit"></form>';
-	echo $quiz_select;
-
 ?>
+<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
 
-
-
-<script>
-	$(document).ready(function(){
-		var quiz ='';
-		$("#quiz_select").submit(function(event){
-			event.preventDefault();
-			//$.post('retrive_quiz.php', $("#quiz_select").serialize, function(data){
-				console.log(data);
-			});
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#quiz_select").submit(function(event){
+		event.preventDefault();
+		$.post('retrieve_quiz.php', $("#quiz_select").serialize(), function(data){
+			
 		})
-	}
+	})	
+})
+	
 </script>
+
+<form id="quiz_select">
+	<p><select id="quiz_name">
+		<?php echo $quiz_select; ?>
+	</select></p>
+	<p><input type="submit" value="Submit"></p>
+</form>
