@@ -37,10 +37,6 @@ var current = 0;
 ];*/
 
 
-function inject (loc, val){
-	document.getElementById(loc).innerHTML = val;
-}
-
 function displayQuiz(quiz, quizCount){
 	var fin = "<form id='quiz'>";
 	var alpha = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -55,12 +51,12 @@ function displayQuiz(quiz, quizCount){
 		fin += "</ul></div>";
 	}
 	fin += '</form><button id="grade">Submit</button>';
-	inject('stuff', fin)
+	$("#stuff").html(fin);
 }
 
 function adjustCounter(counter, quizCount){
 	current = (counter+1) + '/ ' + (quizCount.length);
-	inject('quest_count', current)
+	$("#quest_count").html(current);
 }
 
 $(document).ready(function() {
@@ -74,7 +70,7 @@ $(document).ready(function() {
 			answerTrigger = true;
 		}
 		if (answerTrigger == true){
-			inject("quest_count", "Please answer all questions!");
+			$("#quest_count").html("Please answer all questions!");
 		} else {
 			$.post("grade_quiz.php", $("#quiz").serialize(), function(data){
 				alert(data);
