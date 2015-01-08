@@ -32,7 +32,8 @@ $(document).ready(function(){
 		})
 	})
 
-	$('#grade').click(function() {
+	$("#quiz").submit(function(event) {
+		event.preventDefault();
 		var answerTrigger = false;
 		if ($("input[value='unanswered']").is(':checked')){
 			answerTrigger = true;
@@ -76,7 +77,7 @@ $(document).ready(function(){
 
 
 function displayQuiz(quiz, quizCount){
-	var fin = "<form id='quiz'>";
+	var fin = "";
 	var alpha = "abcdefghijklmnopqrstuvwxyz".split("");
 	fin += '<input type="hidden" name="quizID" value="1">';
 	for (var i=1; i<quiz.length; i++){
@@ -86,6 +87,7 @@ function displayQuiz(quiz, quizCount){
 			for (var j=0; j<quiz[i].answer.length; j++){
 				fin += "<li><input type='radio' name='q"+ i +"' value='"+quiz[i].answer[j]+"'>"+alpha[j]+'. '+quiz[i].answer[j]+"</li>";
 			}
+		fin += '<li><input type="radio" name="q'+ i +'" value="unanswered" checked="checked" class="unanswered" style="display:none;"></li>';	
 		} else {
 			var matchSelect = '';
 			answers = quiz[i].answer.sort();
@@ -95,15 +97,13 @@ function displayQuiz(quiz, quizCount){
 				matchSelect += '<option value="'+answers[j]+'">'+answers[j]+'</option>';
 			}
 			for(var k = 0; k < quiz[i].question.length; k++){
-				fin += '<li>'+ quiz[i].question[k]+' : <select>'+matchSelect+'</select>';
+				fin += '<li>'+ quiz[i].question[k]+' : <select name="q'+i+'-'+k+'" id="q'+i+'-'+k+'" >'+matchSelect+'</select>';
 			}
 		}	
-		fin += '<li><input type="radio" name="q'+ i +'" value="unanswered" checked="checked" class="unanswered" style="display:none;"></li>';
 		fin += "</ul></div>";
 	}
-	fin += '</form><button id="grade">Submit</button>';
 	$("#stuff").html(fin);
-	$("#quiz_area").show();
+	$("#quiz_area, #stuff").show();
 }
 
 function adjustCounter(counter, quizCount){
@@ -138,8 +138,11 @@ function shuffle(array) {
 	<p><input type="submit" value="Submit"></p>
 </form>
 <div id="quiz_area">
-	<div id="quest_count"></div>
-	<div id="stuff">
-	</div>
-	<button id="prev" type="button">Previous</button><button id="next" type="button">Next</button>
+	<form id="quiz">
+		<div id="quest_count"></div>
+		<div id="stuff">
+		</div>
+		<button id="prev" type="button">Previous</button><button id="next" type="button">Next</button>
+		<input type="submit" value="Grade">
+	</form>
 </div>
