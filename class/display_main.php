@@ -1,5 +1,6 @@
 <?php
 
+require("../database.php");
 
 class ListCourses {
 
@@ -15,10 +16,22 @@ class ListCourses {
 
 	public function showCourses() {
 
+		$this->db->query("SELECT * FROM class_enroll WHERE id_user = :id");
+		$this->db->bind(":id", $this->user_id);
+		$results = $this->db->resultset();
+		foreach($results as $result) {
+			$this->db->query("SELECT * FROM course WHERE id_course = :id");
+			$this->db->bind(":id", $result['id_course']);
+			$result = $this->db->single();
+			echo '<a href="course_main.php?=id_couse='. $result['id_course'] .'">'. $result['name'] .'</a><br/>'; 
+		}
 	}
-
 }
 
+$db = new Database();
 
+$course = new ListCourses($db, '1');
+
+$course->showCourses();
 
 ?>
