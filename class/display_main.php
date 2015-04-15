@@ -23,7 +23,7 @@ class ListCourses {
 			$this->db->query("SELECT * FROM course WHERE id_course = :id");
 			$this->db->bind(":id", $result['id_course']);
 			$result = $this->db->single();
-			echo '<a href="course_main.php?=id_couse='. $result['id_course'] .'">'. $result['name'] .'</a><br/>'; 
+			echo '<a href="course_main.php?id_course='. $result['id_course'] .'">'. $result['name'] .'</a><br/>'; 
 		}
 	}
 }

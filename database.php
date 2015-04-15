@@ -3,7 +3,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', 'mysql');
-define('DB_NAME', 'lms');
+define('DB_NAME', 'lms_content');
 define('DB_PORT', '3306');
 
 
