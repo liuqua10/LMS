@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!--[if lte IE 9 ]> <html class="ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us"> <!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us"> 
     <head>
         
                 <title>Please login </title>
@@ -20,24 +19,27 @@
 
 <div class="page-wrap">
 	<div class="static-form">
-		<form class = "loginform" id="signupform" action="signup.php" method="post">
+		<form class = "loginform" id="signupform" action="signup.php" method="POST">
 
 			<h2>Welcome Earthlings</h2>
 			<h3 class="info">Please enter your information below:</h3>
 			<p class="back"><a href="login_page.php">Back to login page</a></p>
 			 <div class="form-field">
-                                <input type="text" name="fullName" id="fullName" value="" placeholder="Full name" maxlength="100" />                <input type="hidden" name="txtFname" id="txtFname" value="" maxlength="100" />                <input type="hidden" name="txtLname" id="txtLname" value="" maxlength="100" />                                            </div>
-
-            <div class="form-field">
-                <input type="text" name="username" id="username" value="" placeholder="username" />                                             
+                <input type="text" name="fullName" id="fullName" value="" placeholder="Full name" maxlength="100" />                
+                <input type="hidden" name="txtFname" id="txtFname" value="" maxlength="100" />                
+                <input type="hidden" name="txtLname" id="txtLname" value="" maxlength="100" />                                      
             </div>
 
             <div class="form-field">
-                <input type="text" name="txtEmail" id="txtEmail" value="" placeholder="Email" />                                                
+                <input type="text" name="username" id="username" value="" placeholder="username" />                                  
             </div>
 
             <div class="form-field">
-                <input type="password" name="txtPassword" id="txtPassword" value="" placeholder="Password" maxlength="25" />                <div id="divPassword" class="errMessage"></div>
+                <input type="text" name="txtEmail" id="txtEmail" value="" placeholder="Email" />                                    
+            </div>
+
+            <div class="form-field">
+                <input type="password" name="txtPassword" id="txtPassword" value="" placeholder="Password" maxlength="25" />             <div id="divPassword" class="errMessage"></div>
                 <div id="divLenPassword" class="errMessage"></div>
 			</div>
 
@@ -61,7 +63,7 @@
 			<div class = "animals">
 				<img class = "animal" src="puppy.jpg" alt = "puppy"  width="75">
 				<img class = "animal" src="kitten.jpg" alt = "kitten"  width="75">
-				<img class = "animal" src="seal.jpg" alt = "seal"  width="75">
+				<img class = "animal" src="seal.png" alt = "seal"  width="75">
 
 			</div>
 			<div class = "form-field">
@@ -75,7 +77,7 @@
 <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        mixpanel.track('registration_page');
+        mixpanel.track('signupform');
         $('form input[type="text"], textarea').first().focus();
 
         $.validator.addMethod(
