@@ -1,139 +1,62 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us"> 
-    <head>
-        
-                <title>Please login </title>
+<html>
 
-                <link rel="stylesheet" type="text/css" media="screen" href="home.css" />
-
-        <script type="text/javascript" src="//use.typekit.net/gwl2ttn.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        <script type="text/javascript" src="https://d2zruwytl6b6e6.cloudfront.net/js/cache/marketing-vendor.239e349b.js"></script>
-        <script type="text/javascript" src="https://d2zruwytl6b6e6.cloudfront.net/js/marketing.js"></script>
-
-
-      
-    </head>
+<head>
+    <title>Please Signup </title>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <!-- Angular js -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <!-- Validation js -->
+    <script src="app.js"></script>
+</head>
 
 <body class="register index">
 
-<div class="page-wrap">
-	<div class="static-form">
-		<form class = "loginform" id="signupform" action="signup.php" method="POST">
+    <div class="container">
 
-			<h2>Welcome Earthlings</h2>
-			<h3 class="info">Please enter your information below:</h3>
-			<p class="back"><a href="login_page.php">Back to login page</a></p>
-			 <div class="form-field">
-                <input type="text" name="fullName" id="fullName" value="" placeholder="Full name" maxlength="100" />                
-                <input type="hidden" name="txtFname" id="txtFname" value="" maxlength="100" />                
-                <input type="hidden" name="txtLname" id="txtLname" value="" maxlength="100" />                                      
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>Please Enter Information Below</h1>
+        </div>
+
+
+        <!-- ============FORM================ -->
+
+
+      <!-- pass in the variable if form is valid or invalid -->
+        <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+            <!-- NAME -->
+            <div class="form-group" required>
+                <label>Name</label>
+                <input type="text" name="name" ng-model="name" class="form-control" required>
+                <span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+                <span ng-show="myForm.name.$error.required">Name is required.</span>
+                </span>
             </div>
 
-            <div class="form-field">
-                <input type="text" name="username" id="username" value="" placeholder="username" />                                  
+            <!-- USERNAME -->
+            <div class="form-group" required>
+                <label>Username</label>
+                <input type="text" name="user" ng-model="user" class="form-control" required>
+                <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                <span ng-show="myForm.user.$error.required">Username is required.</span>
+                </span>
             </div>
 
-            <div class="form-field">
-                <input type="text" name="txtEmail" id="txtEmail" value="" placeholder="Email" />                                    
+            <!-- EMAIL -->
+            <div class="form-group" required>
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" ng-model="uemail">
+                <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                <span ng-show="myForm.email.$error.required">Email is required.</span>
+                <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+                </span>
             </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
 
-            <div class="form-field">
-                <input type="password" name="txtPassword" id="txtPassword" value="" placeholder="Password" maxlength="25" />             <div id="divPassword" class="errMessage"></div>
-                <div id="divLenPassword" class="errMessage"></div>
-			</div>
 
-			<div class = "form-field">
-				<input name="School" type="text" size="30" placeholder= "Your School" />
-			</div>
+        </form>
+</body>
 
-			<div class = "form-field">
-				<input name="Identification number" type="text" size="30" placeholder= "Your ID number" />
-			</div>
-			
-			<div class="form-field checkboxes">
-                <label class="checkbox" for="chkTerm">
-                    <input id="chkTerm" name="chkTerm" type="checkbox" />
-                    I agree to the
-                    <a title="Terms of Use" href="/terms" target="_blank">Terms of Use</a> and
-                    <a title="Privacy Policy" href="/privacy" target="_blank">Privacy Policy</a>.
-                </label>
-            </div>
-			<p>Please select the baby seal</p>
-			<div class = "animals">
-				<img class = "animal" src="puppy.jpg" alt = "puppy"  width="75">
-				<img class = "animal" src="kitten.jpg" alt = "kitten"  width="75">
-				<img class = "animal" src="seal.png" alt = "seal"  width="75">
-
-			</div>
-			<div class = "form-field">
-				<input class = "btn btn-lg btn-primary" type="submit" value="Sign Up" />
-			</div>
-
-		</form>
-	</div>
-</div>
-
-<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        mixpanel.track('signupform');
-        $('form input[type="text"], textarea').first().focus();
-
-        $.validator.addMethod(
-            'regex',
-            function(value, element, regexp) {
-                var check = false;
-                var re = new RegExp(regexp);
-                return this.optional(element) || re.test(value);
-            },
-            'Please use only upper and lowercase letters here.'
-        );
-
-        var validation = $('#signupform').validate({
-            messages: {
-                fullName: {
-                    required: 'Please enter your full name.',
-                    maxlength: 'Name cannot be more than 100 characters.',
-                    regex: 'Please enter both your first and last names.'
-                },
-
-                txtEmail: {
-                    required: 'Please enter your e-mail address.',
-                    email: 'Please enter a valid e-mail address.'
-                },
-
-                txtPassword: {
-                    required: 'Please enter a password.',
-                    rangelength: 'Please enter a password between 6-20 characters.'
-                },
-
-                institution: 'Please enter your institution.'
-            },
-
-            rules: {
-                fullName: {
-                    required: true,
-                    maxlength: 100,
-                    regex: /^[A-Za-z\s`~!@#$%^&*()+={}|;:'",.<>\/?\\-]+\s[A-Za-z\s`~!@#$%^&*()+={}|;:'",.<>\/?\\-]+$/
-                },
-
-                txtEmail: {
-                    required: true,
-                    email: true
-                },
-
-                txtPassword: {
-                    required: true,
-                    rangelength: [6, 20]
-                },
-
-                institution: {
-                    required: true
-                }
-            }
-        });
-  
-</script>
-	</body>
 </html>
