@@ -16,8 +16,9 @@
     <div class="container">
 
         <!-- PAGE HEADER -->
-        <div class="page-header">
+        <div class="page-header row">
             <h1>Please Enter Information Below</h1>
+
         </div>
 
 
@@ -53,6 +54,21 @@
                 <span ng-show="myForm.email.$error.email">Invalid email address.</span>
                 </span>
             </div>
+
+            <!-- PASSWORD -->
+            <div class="form-group" required>
+                <label>Password (between 3 to 8 charaters)</label>
+                <input type="password" name="password" class="form-control" ng-model="password" ng-minlength="3" ng-maxlength="8">
+                <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+                <span ng-show="myForm.password.$error.required">Password is required.</span>
+                <span ng-show="myForm.password.$error.minlength">Password is too short.</span>
+                <span ng-show="myForm.password.$error.maxlength">Password is too long.</span>
+                </span>
+            </div>
+
+
+
+              <!-- Submit -->
             <button type="submit" class="btn btn-primary">Submit</button>
 
 
