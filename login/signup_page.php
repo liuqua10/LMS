@@ -18,7 +18,7 @@
         <!-- PAGE HEADER -->
         <div class="page-header row">
             <h1>Please Enter Information Below</h1>
-
+            <h5><? if (isset($_GET['status'])){ echo "Username taken, please select another";} ?></h5>
         </div>
 
 
@@ -26,13 +26,22 @@
 
 
       <!-- pass in the variable if form is valid or invalid -->
-        <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
-            <!-- NAME -->
+        <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" method="post" action="signup.php" novalidate>
+            <!-- FIRST NAME -->
             <div class="form-group" required>
-                <label>Name</label>
-                <input type="text" name="name" ng-model="name" class="form-control" required>
-                <span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
-                <span ng-show="myForm.name.$error.required">Name is required.</span>
+                <label>First Name</label>
+                <input type="text" name="first_name" ng-model="first_name" class="form-control" required>
+                <span style="color:red" ng-show="myForm.first_name.$dirty && myForm.first_name.$invalid">
+                <span ng-show="myForm.first_name.$error.required">First name is required.</span>
+                </span>
+            </div>
+
+            <!-- LAST NAME -->
+            <div class="form-group" required>
+                <label>Last Name</label>
+                <input type="text" name="last_name" ng-model="last_name" class="form-control" required>
+                <span style="color:red" ng-show="myForm.last_name.$dirty && myForm.last_name.$invalid">
+                <span ng-show="myForm.last_name.$error.required">Last name is required.</span>
                 </span>
             </div>
 
