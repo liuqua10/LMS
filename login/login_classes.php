@@ -48,3 +48,40 @@ class create_user {
     header('Location: login_page.php');
   }
 }
+
+
+class login {
+  private $token;
+  private $username;
+  private $password;
+  private $db;
+
+  public function __construct($user, $pass, $db) {
+    $this->username = $user;
+    $this->password = $pass;
+    $this->token = md5(uniqid($user), true);
+    $this->db = $db;
+    $this->check_login();
+  }
+
+  public function check_login() {
+    $this->db->query("SELECT password FROM users where
+      username = :user");
+    $this->db->bind(':user', $this->username);
+    $result = $this->db->single();
+    $hash = $result[password];
+    if(password_verify($this->password, $hash)) {
+      $this->db->query('INSERT INTO active_login (username, token) VALUES (
+        :user, :token)');
+      $this->db->bind(':user', $this->username);
+      $this->db->bind(':token', $this->token);
+      $this->db->execute();
+      session_start();
+      $_SESSION['username'] = $this->username;
+      $_SESSION['token'] = $this->token;
+      header('Location: ../class/course_main.php');
+    } else {
+      header('Location: login_page.php?status=failed');
+    }
+  }
+}

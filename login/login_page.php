@@ -18,6 +18,7 @@
         <!-- PAGE HEADER -->
         <div class="page-header row">
             <h1>Please Login</h1>
+            <h5><? if (isset($_GET['status'])){ echo "Incorrect password or username";} ?></h5>
 
         </div>
 
@@ -26,7 +27,7 @@
 
 
       <!-- pass in the variable if form is valid or invalid -->
-        <form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+        <form ng-app="myApp" ng-controller="validateCtrl" method="post" action="login.php" name="myForm" novalidate>
 
 
             <!-- USERNAME -->
