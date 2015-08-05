@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require('login_classes.php');
 require('../database.php');

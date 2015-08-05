@@ -72,14 +72,14 @@ class login {
     $hash = $result[password];
     if(password_verify($this->password, $hash)) {
       $this->db->query('INSERT INTO active_login (username, token) VALUES (
-        :user, :token)');
+        :user, :token) ON DUPLICATE KEY UPDATE token=VALUES(token), login_time=
+        CURRENT_TIMESTAMP');
       $this->db->bind(':user', $this->username);
       $this->db->bind(':token', $this->token);
       $this->db->execute();
-      session_start();
       $_SESSION['username'] = $this->username;
       $_SESSION['token'] = $this->token;
-      header('Location: ../class/course_main.php');
+      header('Location: ../auth.php');
     } else {
       header('Location: login_page.php?status=failed');
     }
